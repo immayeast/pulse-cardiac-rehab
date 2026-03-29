@@ -1,6 +1,6 @@
 "use client";
 import { useChat } from 'ai/react';
-import { medicalData } from "@/lib/data"; // Your existing data
+import { medicalData as data } from "../lib/data";
 
 export default function AssistantPage() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({

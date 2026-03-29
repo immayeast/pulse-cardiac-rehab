@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Heart, RefreshCw, X, Play, Volume2 } from 'lucide-react';
-import { NurseClaraAgent as Clara } from "@/lib/agent";
+import { NurseClaraAgent as Clara } from "../lib/agent";
 
 export default function ActiveSession() {
   const [hr, setHr] = useState(72);
