@@ -1,64 +1,95 @@
 "use client";
 import React, { useState } from 'react';
-import { Heart, Play, Calendar, Users, Mic, RefreshCw } from 'lucide-react';
-import Link from 'next/link';
+import { Play, Activity, Smartphone, CheckCircle2, RefreshCw } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import data from "@/lib/data.json"; // Ensure your JSON path is correct
 
 export default function Home() {
+  const [isPreparing, setIsPreparing] = useState(false);
+  const [isSensorLinked, setIsSensorLinked] = useState(true); // Mock wearable status
+  const router = useRouter();
+
   return (
-    <main className="min-h-screen bg-[#FDFBF7] pb-24">
-      {/* 1. MASSIVE STREAK SECTION */}
-      <section className="bg-[#2C5F63] text-white p-8 rounded-b-[3rem] shadow-lg text-center">
-        <h2 className="text-sm uppercase tracking-widest opacity-80 mb-2">Recovery Streak</h2>
-        <div className="text-7xl font-black mb-2">5 <span className="text-2xl font-normal text-[#8BA888]">Days</span></div>
-        <p className="text-[#8BA888] font-medium">You're doing amazing, Arthur!</p>
-      </section>
-
-      <div className="p-6 space-y-6">
-        {/* 2. TODAY'S TASK */}
-        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h3 className="text-xl font-bold text-slate-800">Today's Session</h3>
-              <p className="text-slate-500">15 min Gentle Walk</p>
-            </div>
-            <div className="bg-[#FDFBF7] p-3 rounded-2xl text-[#E57373]">
-              <Heart fill="currentColor" />
-            </div>
-          </div>
-          <Link href="/session/active">
-            <button className="w-full bg-[#2C5F63] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
-              <Play fill="white" size={20} /> Start Now
-            </button>
-          </Link>
+    <main className="p-6 space-y-8 flex flex-col items-center">
+      
+      {/* --- WEARABLE STATUS INDICATOR --- */}
+      <div className="w-full flex justify-between items-center bg-white px-4 py-2 rounded-2xl border border-slate-100 shadow-sm">
+        <div className="flex items-center gap-2">
+          <div className={`w-2 h-2 rounded-full ${isSensorLinked ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'}`} />
+          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+            {isSensorLinked ? "Polar H10 Connected" : "Searching for Sensor..."}
+          </span>
         </div>
-
-        {/* 3. WEEKLY SCHEDULE */}
-        <div className="bg-white p-6 rounded-3xl shadow-sm">
-          <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <Calendar size={18} className="text-[#8BA888]" /> This Week
-          </h3>
-          <div className="flex justify-between text-center">
-            {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-              <div key={i} className="space-y-2">
-                <div className="text-xs font-bold text-slate-400">{day}</div>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${i < 5 ? 'bg-[#8BA888] text-white' : 'border-2 border-slate-100 text-slate-300'}`}>
-                  {i < 5 ? '✓' : ''}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <span className="text-[10px] font-bold text-slate-300">98% BATT</span>
       </div>
 
-      {/* 4. PERSISTENT NURSE CLARA BUTTON (VOICE MODE) */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center">
-        <Link href="/assistant">
-          <button className="w-20 h-20 bg-white rounded-full shadow-2xl border-4 border-[#2C5F63] flex items-center justify-center hover:scale-105 transition-transform group">
-            <Mic size={32} className="text-[#2C5F63] group-active:scale-90" />
+      <div className="w-full space-y-4">
+        {!isPreparing ? (
+          <button 
+            onClick={() => setIsPreparing(true)}
+            className="w-full bg-[#2C5F63] text-white py-10 rounded-[3rem] shadow-2xl flex flex-col items-center justify-center gap-3 group active:scale-95 transition-all"
+          >
+            <div className="bg-white/10 p-5 rounded-full group-hover:scale-110 transition-transform border border-white/20">
+              <Play fill="white" size={32} />
+            </div>
+            
+            <div className="text-center">
+              <span className="text-2xl font-black tracking-tight block">Start Training Session</span>
+              
+              {/* --- DATA JSON PLACEMENT --- */}
+              <p className="text-sm font-medium opacity-70 mt-1">
+                {data.onboarding.extracted.plan} • {data.onboarding.extracted.intensity}
+              </p>
+            </div>
           </button>
-        </Link>
-        <p className="mt-2 text-[#2C5F63] font-bold text-sm bg-white/80 px-3 py-1 rounded-full shadow-sm">Talk to Clara</p>
+        ) : (
+          /* --- NURSE CLARA PRE-SESSION CHECK --- */
+          <div className="bg-white p-8 rounded-[3rem] shadow-xl border-2 border-[#8BA888] animate-in zoom-in-95 w-full">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-[#8BA888]/10 p-2 rounded-lg">
+                <Activity className="text-[#8BA888]" size={20} />
+              </div>
+              <span className="font-black uppercase text-[10px] tracking-widest text-slate-400">Nurse Clara's Check</span>
+            </div>
+            
+            <p className="text-2xl font-serif italic text-slate-800 mb-8 leading-snug">
+              "Ready to go, Arthur? I've got your heart monitor synced up. Make sure your water is within reach, dear."
+            </p>
+
+            <div className="grid grid-cols-2 gap-4">
+              <button 
+                onClick={() => router.push('/session/active')}
+                className="bg-[#8BA888] text-white py-5 rounded-2xl font-black text-lg shadow-lg active:bg-[#7a9677]"
+              >
+                Yes, Clara
+              </button>
+              <button 
+                onClick={() => setIsPreparing(false)}
+                className="bg-slate-50 text-slate-400 py-5 rounded-2xl font-bold"
+              >
+                Not yet
+              </button>
+            </div>
+            
+            <button className="w-full mt-6 py-2 text-[#2C5F63] font-bold text-xs flex items-center justify-center gap-2 opacity-60">
+              <RefreshCw size={14} /> Repeat Instruction
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* --- REHAB PROGRESS (STREAK) --- */}
+      <div className="w-full grid grid-cols-2 gap-4">
+        <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+          <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Weekly Goal</p>
+          <p className="text-2xl font-black text-[#2C5F63]">3 / 5 <span className="text-sm font-medium text-slate-300">Days</span></p>
+        </div>
+        <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center justify-center">
+          <CheckCircle2 className="text-[#8BA888] mr-2" size={20} />
+          <span className="font-bold text-slate-700">On Track</span>
+        </div>
+      </div>
+
     </main>
   );
 }

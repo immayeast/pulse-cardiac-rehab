@@ -53,11 +53,8 @@ export default function OnboardingUpload() {
           )}
 
           {step === 'complete' && (
-            <button 
-              onClick={() => router.push('/onboarding/confirm')}
-              className="w-full bg-[#8BA888] text-white py-5 rounded-2xl font-bold text-xl shadow-lg flex items-center justify-center gap-2"
-            >
-              See Your Plan <ChevronRight />
+            <button onClick={() => router.push('/onboarding/confirm')}>
+                Next Step
             </button>
           )}
         </div>
