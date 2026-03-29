@@ -17,9 +17,5 @@
     { "id": "chest", "q": "Any tightness or pressure in your chest?", "type": "bool" },
     { "id": "energy", "q": "How is your energy? (1-5)", "type": "scale" },
     { "id": "mood", "q": "How are you feeling emotionally?", "type": "mood" }
-  ],
-  "volunteerMessages": [
-    { "id": 1, "user": "Sarah G.", "text": "So proud of you, Grandpa! ❤️" },
-    { "id": 2, "user": "Volunteer Jan", "text": "Keep taking those steady steps!" }
   ]
 }
