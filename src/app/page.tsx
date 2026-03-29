@@ -1,55 +1,64 @@
-import React from 'react';
-import { Heart, Play, Activity, CheckCircle2 } from 'lucide-react';
+"use client";
+import React, { useState } from 'react';
+import { Heart, Play, Calendar, Users, Mic, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#FDFBF7] p-6 text-slate-800">
-      <div className="max-w-md mx-auto space-y-6">
-        <header className="flex justify-between items-center py-4">
-          <h1 className="text-2xl font-bold text-[#2C5F63]">PulseCircle</h1>
-          <span className="bg-white px-3 py-1 rounded-full text-xs font-bold border border-[#8BA888]/20 text-[#8BA888]">
-            REHAB DAY 5
-          </span>
-        </header>
+    <main className="min-h-screen bg-[#FDFBF7] pb-24">
+      {/* 1. MASSIVE STREAK SECTION */}
+      <section className="bg-[#2C5F63] text-white p-8 rounded-b-[3rem] shadow-lg text-center">
+        <h2 className="text-sm uppercase tracking-widest opacity-80 mb-2">Recovery Streak</h2>
+        <div className="text-7xl font-black mb-2">5 <span className="text-2xl font-normal text-[#8BA888]">Days</span></div>
+        <p className="text-[#8BA888] font-medium">You're doing amazing, Arthur!</p>
+      </section>
 
-        {/* Nurse Clara Assistant */}
-        <section className="bg-white p-6 rounded-3xl shadow-sm border-t-4 border-[#8BA888] relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-2 opacity-10">👵🏼</div>
-          <p className="text-lg italic leading-relaxed text-slate-700">
-            "Good morning, dear. Your heart rate was nice and steady yesterday. Shall we try a gentle 15-minute walk today?"
-          </p>
-          <div className="mt-4 flex gap-4">
-             <button className="text-[#2C5F63] text-sm font-bold flex items-center gap-1">
-               Repeat Instruction
-             </button>
+      <div className="p-6 space-y-6">
+        {/* 2. TODAY'S TASK */}
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h3 className="text-xl font-bold text-slate-800">Today's Session</h3>
+              <p className="text-slate-500">15 min Gentle Walk</p>
+            </div>
+            <div className="bg-[#FDFBF7] p-3 rounded-2xl text-[#E57373]">
+              <Heart fill="currentColor" />
+            </div>
           </div>
-        </section>
-
-        {/* Main Action */}
-        <button className="w-full bg-[#2C5F63] text-white py-6 rounded-3xl text-xl font-bold shadow-lg hover:bg-[#1f4548] transition-all flex items-center justify-center gap-3">
-          <Play fill="white" size={24} /> Start Training Session
-        </button>
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
-            <Heart className="text-[#E57373] mb-1" size={20} />
-            <p className="text-2xl font-bold">74</p>
-            <p className="text-xs text-slate-400 font-medium">AVG BPM</p>
-          </div>
-          <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
-            <CheckCircle2 className="text-[#8BA888] mb-1" size={20} />
-            <p className="text-2xl font-bold">85%</p>
-            <p className="text-xs text-slate-400 font-medium">PLAN SYNC</p>
-          </div>
+          <Link href="/session/active">
+            <button className="w-full bg-[#2C5F63] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
+              <Play fill="white" size={20} /> Start Now
+            </button>
+          </Link>
         </div>
 
-        {/* Community Encouragement */}
-        <div className="bg-[#8BA888]/10 p-4 rounded-2xl border border-[#8BA888]/20">
-          <p className="text-sm font-semibold text-[#2C5F63] mb-1">New Message from Sarah:</p>
-          <p className="text-sm italic text-slate-600">"Go Grandpa! We are all rooting for you today! ❤️"</p>
+        {/* 3. WEEKLY SCHEDULE */}
+        <div className="bg-white p-6 rounded-3xl shadow-sm">
+          <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <Calendar size={18} className="text-[#8BA888]" /> This Week
+          </h3>
+          <div className="flex justify-between text-center">
+            {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
+              <div key={i} className="space-y-2">
+                <div className="text-xs font-bold text-slate-400">{day}</div>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${i < 5 ? 'bg-[#8BA888] text-white' : 'border-2 border-slate-100 text-slate-300'}`}>
+                  {i < 5 ? '✓' : ''}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* 4. PERSISTENT NURSE CLARA BUTTON (VOICE MODE) */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center">
+        <Link href="/assistant">
+          <button className="w-20 h-20 bg-white rounded-full shadow-2xl border-4 border-[#2C5F63] flex items-center justify-center hover:scale-105 transition-transform group">
+            <Mic size={32} className="text-[#2C5F63] group-active:scale-90" />
+          </button>
+        </Link>
+        <p className="mt-2 text-[#2C5F63] font-bold text-sm bg-white/80 px-3 py-1 rounded-full shadow-sm">Talk to Clara</p>
+      </div>
+    </main>
   );
 }
