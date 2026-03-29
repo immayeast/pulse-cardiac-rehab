@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Heart, AlertTriangle, ArrowRight, MessageSquare, Mail, RefreshCw } from "lucide-react";
 import Link from "next/link";
-import data from "../../lib/data.json";
+import { medicalData as data } from "../../lib/data";
 
 export default function CheckinPage() {
   const [step, setStep] = useState(0);

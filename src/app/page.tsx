@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Play, Activity, Heart, CheckCircle2, RefreshCw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import data from "../lib/data.json";
+import { medicalData as data } from "../lib/data";
 
 export default function Home() {
   const [isPreparing, setIsPreparing] = useState(false);

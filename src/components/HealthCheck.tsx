@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import data from "../../lib/data.json";
+import { medicalData as data } from "../../lib/data";
 import { ChevronRight, Heart, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 const QUESTIONS = [
